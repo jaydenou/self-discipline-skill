@@ -1,0 +1,282 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>self-discipline-skill</title>
+<style>
+  :root {
+    --bg: #ffffff;
+    --bg2: #f6f8fa;
+    --border: #d0d7de;
+    --text: #1f2328;
+    --text2: #656d76;
+    --purple: #7c3aed;
+    --purple-bg: #f3f0ff;
+    --teal: #0f766e;
+    --teal-bg: #f0fdfa;
+    --amber: #b45309;
+    --amber-bg: #fffbeb;
+    --green: #15803d;
+    --green-bg: #f0fdf4;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root {
+      --bg: #0d1117;
+      --bg2: #161b22;
+      --border: #30363d;
+      --text: #e6edf3;
+      --text2: #8b949e;
+      --purple: #a78bfa;
+      --purple-bg: #1e1030;
+      --teal: #2dd4bf;
+      --teal-bg: #0a2520;
+      --amber: #fbbf24;
+      --amber-bg: #1c1200;
+      --green: #4ade80;
+      --green-bg: #0a1f0f;
+    }
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; background: var(--bg); color: var(--text); line-height: 1.7; }
+  .wrap { max-width: 800px; margin: 0 auto; padding: 2rem 1.5rem 4rem; }
+
+  .top-bar { display: flex; justify-content: space-between; align-items: center; margin-bottom: 2rem; }
+  .lang-toggle { display: flex; gap: 0; border: 1px solid var(--border); border-radius: 6px; overflow: hidden; }
+  .lang-toggle button { padding: 5px 16px; font-size: 13px; border: none; cursor: pointer; background: var(--bg); color: var(--text2); transition: all 0.15s; }
+  .lang-toggle button.active { background: var(--purple); color: #fff; }
+  .lang-toggle button:hover:not(.active) { background: var(--bg2); }
+
+  .hero { text-align: center; padding: 2rem 0 2.5rem; border-bottom: 1px solid var(--border); margin-bottom: 2.5rem; }
+  .hero h1 { font-size: 28px; font-weight: 600; margin-bottom: 0.5rem; }
+  .hero .sub { font-size: 16px; color: var(--text2); margin-bottom: 1.25rem; }
+  .badges { display: flex; gap: 8px; justify-content: center; flex-wrap: wrap; }
+  .badge { font-size: 12px; padding: 3px 10px; border-radius: 20px; font-weight: 500; }
+  .badge.purple { background: var(--purple-bg); color: var(--purple); }
+  .badge.teal { background: var(--teal-bg); color: var(--teal); }
+  .badge.green { background: var(--green-bg); color: var(--green); }
+
+  h2 { font-size: 18px; font-weight: 600; margin: 2rem 0 1rem; padding-bottom: 0.4rem; border-bottom: 1px solid var(--border); }
+  h3 { font-size: 15px; font-weight: 600; margin: 1.25rem 0 0.5rem; color: var(--text2); }
+  p { margin-bottom: 0.75rem; font-size: 15px; color: var(--text); }
+
+  .book-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-bottom: 1.5rem; }
+  .book-card { border: 1px solid var(--border); border-radius: 8px; padding: 1rem 1.25rem; }
+  .book-card.purple { border-left: 3px solid var(--purple); }
+  .book-card.teal { border-left: 3px solid var(--teal); }
+  .book-label { font-size: 11px; font-weight: 600; color: var(--text2); text-transform: uppercase; letter-spacing: 0.05em; margin-bottom: 4px; }
+  .book-title { font-size: 15px; font-weight: 600; margin-bottom: 4px; }
+  .book-desc { font-size: 13px; color: var(--text2); }
+
+  .feature-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 10px; margin-bottom: 1.5rem; }
+  .feature-card { background: var(--bg2); border-radius: 8px; padding: 0.85rem 1rem; }
+  .feature-icon { font-size: 18px; margin-bottom: 6px; }
+  .feature-title { font-size: 13px; font-weight: 600; margin-bottom: 3px; }
+  .feature-desc { font-size: 12px; color: var(--text2); line-height: 1.5; }
+
+  .code-block { background: var(--bg2); border: 1px solid var(--border); border-radius: 8px; padding: 1rem 1.25rem; font-family: "SFMono-Regular", Consolas, monospace; font-size: 13px; margin: 0.75rem 0 1.25rem; overflow-x: auto; color: var(--text); }
+  .code-block .comment { color: var(--text2); }
+
+  .law-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-bottom: 1.5rem; }
+  .law-card { background: var(--bg2); border-radius: 8px; padding: 0.85rem 1rem; }
+  .law-num { font-size: 11px; font-weight: 600; color: var(--text2); margin-bottom: 3px; }
+  .law-title { font-size: 14px; font-weight: 600; margin-bottom: 2px; }
+  .law-sub { font-size: 12px; color: var(--text2); }
+
+  .habit-loop { display: flex; align-items: center; gap: 8px; flex-wrap: wrap; margin: 0.75rem 0 1.25rem; }
+  .loop-step { background: var(--purple-bg); color: var(--purple); border-radius: 6px; padding: 5px 14px; font-size: 13px; font-weight: 500; }
+  .loop-arrow { color: var(--text2); font-size: 16px; }
+
+  blockquote { border-left: 3px solid var(--border); padding: 0.5rem 1rem; margin: 0.75rem 0 1.25rem; color: var(--text2); font-style: italic; font-size: 14px; }
+
+  .install-tabs { display: flex; gap: 0; margin-bottom: 0; }
+  .install-tab { padding: 6px 14px; font-size: 13px; border: 1px solid var(--border); cursor: pointer; background: var(--bg); color: var(--text2); }
+  .install-tab:first-child { border-radius: 6px 0 0 0; }
+  .install-tab:last-child { border-radius: 0 6px 0 0; }
+  .install-tab.active { background: var(--bg2); color: var(--text); border-bottom-color: var(--bg2); font-weight: 500; }
+  .install-panel { background: var(--bg2); border: 1px solid var(--border); border-radius: 0 6px 6px 6px; padding: 1rem 1.25rem; font-family: monospace; font-size: 13px; }
+
+  .example-list { list-style: none; margin-bottom: 1.5rem; }
+  .example-list li { background: var(--bg2); border-radius: 6px; padding: 0.6rem 1rem; font-size: 14px; margin-bottom: 6px; border-left: 3px solid var(--purple); }
+
+  .footer { text-align: center; padding-top: 2rem; border-top: 1px solid var(--border); font-size: 13px; color: var(--text2); }
+  .footer a { color: var(--purple); text-decoration: none; }
+
+  .lang-content { display: none; }
+  .lang-content.active { display: block; }
+
+  @media (max-width: 600px) {
+    .book-grid, .law-grid { grid-template-columns: 1fr; }
+    .top-bar { flex-direction: column; gap: 12px; align-items: flex-start; }
+  }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <div class="top-bar">
+    <div style="font-size:13px;color:var(--text2);font-family:monospace;">📦 self-discipline-skill</div>
+    <div class="lang-toggle">
+      <button class="active" onclick="setLang('zh')">中文</button>
+      <button onclick="setLang('en')">English</button>
+    </div>
+  </div>
+
+  <!-- CHINESE -->
+  <div id="lang-zh" class="lang-content active">
+    <div class="hero">
+      <h1>自律成长教练</h1>
+      <p class="sub">基于《认知觉醒》和《掌控习惯》的科学习惯培养 AI Skill</p>
+      <div class="badges">
+        <span class="badge purple">《认知觉醒》周岭</span>
+        <span class="badge teal">《掌控习惯》James Clear</span>
+        <span class="badge green">Claude Code · AirJelly</span>
+      </div>
+    </div>
+
+    <h2>简介</h2>
+    <p>当你向 AI 提问习惯养成、自律计划、拖延分析、每日复盘等话题时，这个 skill 会自动触发，给出有理论依据、可立即执行的建议。</p>
+    <div class="book-grid">
+      <div class="book-card purple">
+        <div class="book-label">理论基础 · 一</div>
+        <div class="book-title">《认知觉醒》</div>
+        <div class="book-desc">三重大脑、元认知、舒适区边缘、清晰力、人生五件套</div>
+      </div>
+      <div class="book-card teal">
+        <div class="book-label">理论基础 · 二</div>
+        <div class="book-title">《掌控习惯》</div>
+        <div class="book-desc">习惯回路、4大定律、身份认同、两分钟法则、复利效应</div>
+      </div>
+    </div>
+
+    <h2>核心能力</h2>
+    <div class="feature-grid">
+      <div class="feature-card"><div class="feature-icon">🧠</div><div class="feature-title">习惯诊断</div><div class="feature-desc">用三重大脑模型分析坚持不下去的根本原因</div></div>
+      <div class="feature-card"><div class="feature-icon">📐</div><div class="feature-title">系统设计</div><div class="feature-desc">实施意图公式 + 习惯叠加 + 环境设计</div></div>
+      <div class="feature-card"><div class="feature-icon">📊</div><div class="feature-title">打卡追踪</div><div class="feature-desc">每日打卡模板 + 周复盘框架</div></div>
+      <div class="feature-card"><div class="feature-icon">🔍</div><div class="feature-title">拖延分析</div><div class="feature-desc">定位本能脑 / 情绪脑 / 模糊目标导致的拖延</div></div>
+    </div>
+
+    <h2>习惯回路</h2>
+    <div class="habit-loop">
+      <span class="loop-step">提示 Cue</span><span class="loop-arrow">→</span>
+      <span class="loop-step">渴求 Craving</span><span class="loop-arrow">→</span>
+      <span class="loop-step">反应 Response</span><span class="loop-arrow">→</span>
+      <span class="loop-step">奖励 Reward</span>
+    </div>
+    <div class="law-grid">
+      <div class="law-card"><div class="law-num">定律 ①</div><div class="law-title">让它显而易见</div><div class="law-sub">习惯叠加 · 实施意图 · 环境设计</div></div>
+      <div class="law-card"><div class="law-num">定律 ②</div><div class="law-title">让它有吸引力</div><div class="law-sub">捆绑诱惑 · 加入群体 · 改变框架</div></div>
+      <div class="law-card"><div class="law-num">定律 ③</div><div class="law-title">让它简便易行</div><div class="law-sub">两分钟法则 · 减少阻力 · 预先准备</div></div>
+      <div class="law-card"><div class="law-num">定律 ④</div><div class="law-title">让它令人愉悦</div><div class="law-sub">即时奖励 · 习惯追踪 · 不中断 streak</div></div>
+    </div>
+    <blockquote>"你不会上升到目标的水平，你会下降到系统的水平。" — James Clear</blockquote>
+
+    <h2>安装</h2>
+    <div class="install-tabs">
+      <div class="install-tab active" onclick="switchTab(this,'zh','claude')">Claude Code</div>
+      <div class="install-tab" onclick="switchTab(this,'zh','airjelly')">AirJelly</div>
+    </div>
+    <div id="tab-zh-claude" class="install-panel">git clone https://github.com/jaydenou/self-discipline-skill.git ~/.claude/skills/self-discipline-skill</div>
+    <div id="tab-zh-airjelly" class="install-panel" style="display:none">在 AirJelly 控制台中安装 self-discipline.skill 文件即可。</div>
+
+    <h2>使用示例</h2>
+    <ul class="example-list">
+      <li>帮我制定一个早起习惯计划，目标是每天 6:30 起床</li>
+      <li>我总是拖延，帮我用三重大脑模型分析一下原因</li>
+      <li>帮我设计一个包含运动、阅读和写作的每日习惯系统</li>
+      <li>今天完成了跑步和阅读，但没写作，帮我做今日复盘</li>
+    </ul>
+  </div>
+
+  <!-- ENGLISH -->
+  <div id="lang-en" class="lang-content">
+    <div class="hero">
+      <h1>Self-Discipline Coach</h1>
+      <p class="sub">An AI Skill for building lasting habits — powered by <em>Awakening Cognition</em> & <em>Atomic Habits</em></p>
+      <div class="badges">
+        <span class="badge purple">Awakening Cognition · Zhou Ling</span>
+        <span class="badge teal">Atomic Habits · James Clear</span>
+        <span class="badge green">Claude Code · AirJelly</span>
+      </div>
+    </div>
+
+    <h2>About</h2>
+    <p>This skill automatically triggers whenever you ask about habit building, self-discipline planning, procrastination analysis, or daily reviews — delivering science-backed, immediately actionable advice.</p>
+    <div class="book-grid">
+      <div class="book-card purple">
+        <div class="book-label">Foundation · One</div>
+        <div class="book-title">Awakening Cognition</div>
+        <div class="book-desc">Triple Brain Model, metacognition, comfort-zone edge, clarity, daily five-piece routine</div>
+      </div>
+      <div class="book-card teal">
+        <div class="book-label">Foundation · Two</div>
+        <div class="book-title">Atomic Habits</div>
+        <div class="book-desc">Habit loop, 4 laws of behavior change, identity-based habits, 2-minute rule, compound effect</div>
+      </div>
+    </div>
+
+    <h2>What it does</h2>
+    <div class="feature-grid">
+      <div class="feature-card"><div class="feature-icon">🧠</div><div class="feature-title">Habit Diagnosis</div><div class="feature-desc">Identify root causes using the Triple Brain Model</div></div>
+      <div class="feature-card"><div class="feature-icon">📐</div><div class="feature-title">System Design</div><div class="feature-desc">Implementation intentions + habit stacking + environment design</div></div>
+      <div class="feature-card"><div class="feature-icon">📊</div><div class="feature-title">Daily Tracking</div><div class="feature-desc">Check-in template + weekly review framework</div></div>
+      <div class="feature-card"><div class="feature-icon">🔍</div><div class="feature-title">Procrastination Fix</div><div class="feature-desc">Pinpoint whether it's instinct, emotion, or vague goals blocking you</div></div>
+    </div>
+
+    <h2>The Habit Loop</h2>
+    <div class="habit-loop">
+      <span class="loop-step">Cue</span><span class="loop-arrow">→</span>
+      <span class="loop-step">Craving</span><span class="loop-arrow">→</span>
+      <span class="loop-step">Response</span><span class="loop-arrow">→</span>
+      <span class="loop-step">Reward</span>
+    </div>
+    <div class="law-grid">
+      <div class="law-card"><div class="law-num">Law 1</div><div class="law-title">Make it obvious</div><div class="law-sub">Habit stacking · implementation intentions · environment design</div></div>
+      <div class="law-card"><div class="law-num">Law 2</div><div class="law-title">Make it attractive</div><div class="law-sub">Temptation bundling · social environment · reframe mindset</div></div>
+      <div class="law-card"><div class="law-num">Law 3</div><div class="law-title">Make it easy</div><div class="law-sub">2-minute rule · reduce friction · prepare in advance</div></div>
+      <div class="law-card"><div class="law-num">Law 4</div><div class="law-title">Make it satisfying</div><div class="law-sub">Immediate reward · habit tracking · never miss twice</div></div>
+    </div>
+    <blockquote>"You do not rise to the level of your goals. You fall to the level of your systems." — James Clear</blockquote>
+
+    <h2>Installation</h2>
+    <div class="install-tabs">
+      <div class="install-tab active" onclick="switchTab(this,'en','claude')">Claude Code</div>
+      <div class="install-tab" onclick="switchTab(this,'en','airjelly')">AirJelly</div>
+    </div>
+    <div id="tab-en-claude" class="install-panel">git clone https://github.com/jaydenou/self-discipline-skill.git ~/.claude/skills/self-discipline-skill</div>
+    <div id="tab-en-airjelly" class="install-panel" style="display:none">Install the self-discipline.skill file directly from the AirJelly console.</div>
+
+    <h2>Example prompts</h2>
+    <ul class="example-list">
+      <li>Help me build an early-rising habit — I want to wake up at 6:30 AM every day</li>
+      <li>I keep procrastinating. Analyze the root cause using the Triple Brain Model</li>
+      <li>Design a daily habit system that includes exercise, reading, and writing</li>
+      <li>I completed running and reading today but skipped writing — help me do a daily review</li>
+    </ul>
+  </div>
+
+  <div class="footer">
+    <a href="https://github.com/jaydenou/self-discipline-skill">GitHub</a> · MIT License · made with 🪼 AirJelly
+  </div>
+
+</div>
+<script>
+  function setLang(lang) {
+    document.querySelectorAll('.lang-content').forEach(el => el.classList.remove('active'));
+    document.getElementById('lang-' + lang).classList.add('active');
+    document.querySelectorAll('.lang-toggle button').forEach((btn, i) => {
+      btn.classList.toggle('active', (lang === 'zh' && i === 0) || (lang === 'en' && i === 1));
+    });
+    document.documentElement.lang = lang;
+  }
+  function switchTab(btn, lang, tab) {
+    const panels = btn.parentElement.parentElement.querySelectorAll('.install-panel');
+    panels.forEach(p => p.style.display = 'none');
+    document.getElementById('tab-' + lang + '-' + tab).style.display = 'block';
+    btn.parentElement.querySelectorAll('.install-tab').forEach(t => t.classList.remove('active'));
+    btn.classList.add('active');
+  }
+</script>
+</body>
+</html>
